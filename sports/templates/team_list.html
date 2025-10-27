@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>Sport teams</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/team_list.css' %}">
+    <script src="{% static 'js/team_list.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div style="min-height: 100vh;">
+        <div class="school-container">
+            <h1>Our Teams</h1>
+            <div class="underline"></div>
+            <p>Meet our student athletes</p>
+        </div>
+        <div class="filter-section">
+            <label for="season-select">Filter by Season:</label>
+            <select name="season" id="season-select">
+                <option value="1">Season 1</option>
+                <option value="2">Season 2</option>
+                <option value="3">Season 3</option>
+                <option value="4">Season 4</option>
+            </select>
+        </div>
+
+        <div id="teams-container">
+            <div id="notAvailable" class="hidden">
+                <h1>This sesaon has not been updated yet, check it out soon!! Beensauce is probably too lazy</h1>
+            </div>
+            {% for team in teams %}
+                <div class="card team-item" style="width: 26rem;height:32rem;" data-season="{{ team.season }}">
+                    <img src="{{ team.photo.url }}" class="card-img-top team-photo" alt="{{ team.name }} picture">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-weight: bold;">{{ team }}</h5>
+                        <h6 style="font-weight: 600;">Coach: 
+                            {% for coach in team.get_coach %}
+                                {{ coach.name }}
+                            {% endfor %}
+                        </h6>
+                        
+                        {% if team.get_student_coach %}
+                            <h6>Student coach: 
+                                {% for coach in team.get_student_coach %}
+                                    {{ coach.name }}
+                                {% endfor %}
+                            </h6>
+                        {% endif %}
+                        <h6>Captain: {{ team.get_captain }}</h6>
+                        <a href="{% url 'team' team_name=team.name %}" class="btn btn-primary btn-visit">View team</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

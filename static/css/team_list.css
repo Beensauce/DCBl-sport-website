@@ -1,0 +1,118 @@
+:root {
+  --red: #9c0000;
+  --navy-blue: #19273d;
+  --white-kind-of: #f9fafb;
+}
+
+.team-item {
+  margin: 1rem;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.team-item:hover {
+  transform: scale(1.01);
+}
+
+.hidden {
+  display: none !important;
+  /* Alternative: opacity: 0; transform: scale(0.95); */
+}
+
+#teams-container {
+  display: flex;
+  gap: 1%;
+  justify-content: center;
+  height:auto;
+}
+
+.team-photo {
+  height: 60%;
+  object-fit: cover;
+}
+
+.btn-visit {
+  position: absolute;
+  bottom: 1.5rem;
+  background-color: var(--red);
+  transition: background-color 0.3s ease transform 0.3s ease;
+}
+
+.btn-visit:hover {
+  background-color: var(--navy-blue);
+}
+
+.card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  /* Optional: Prevent image overflow */
+  object-fit: cover;
+}
+
+.school-container {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.school-container h1 {
+    font-size: 2.5rem;
+    color: #1a2b3c;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.school-container .underline {
+    width: 80px;
+    height: 4px;
+    background-color: var(--red);
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+.school-container p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 20px auto;
+    max-width: 700px;
+    line-height: 1.8;
+}
+
+.filter-section{
+  margin-left:7.5%;
+}
+
+#season-select {
+  /* Size and padding */
+  padding: 0.5rem; /* Increased padding for better feel */
+  
+  /* Enhanced colors */
+  background-color: #ffffff;
+  color: #2c3e50;
+  border: 2px solid #bdc3c7; /* Slightly thicker border */
+  border-radius: 8px; /* More rounded corners */
+  
+}
+
+#notAvailable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+#notAvailable h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+
+
+@media (max-width: 768px){
+    #teams-container{
+      display: block;
+    }
+} 

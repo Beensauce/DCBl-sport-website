@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>{{ team }}</title>
+    <script src="https://kit.fontawesome.com/042d0c3d1e.js" crossorigin="anonymous" defer></script>
+    <link rel="stylesheet" href="{% static 'css/team.css' %}">
+    <script src="{% static 'js/player_list.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="team-info">
+            <h1 id="head-text" class="head-text" data-team-name="{{ team.name }}">{{ team }}</h1>
+            <img src="{{ team.photo.url }}" alt="{{ team }}">   
+            <div class="text">
+                <div class="upper-text">
+                    <div class="key-members">
+                        <h3>Coach: {{ team.coach }}</h3>
+                        <h3>Captain: {{ team.get_captain }}</h3>
+                    </div>
+                    {% if team.instagram %}
+                        <a href="{{ team.instagram }}"><i class="fa-brands fa-instagram"></i></a>
+                    {% endif %}
+                </div>
+
+                <div class="description">{{ team.description }}</div>
+            </div>
+<!-- 
+            <nav class="team-nav">
+                <ul id="team-nav">
+                    <li class="tabs underline"><a href="#"><i>Results</i></a></li>
+                    <li class="tabs"><a href="#"><i>Upcoming games</i></a></li>
+                </ul>
+            </nav> -->
+            <div class="games">
+                <h1 class="head-text">Recent Results</h1>
+                    <div class="results-container">
+                    {% for result in results %}
+                    <div class="result-card result">
+                        <div class="sport-tag">{{ result.dcb_team }}</div>
+                            {% if result.dcb_score > result.opp_score %}
+                                <div class="winner-indicator" style="background-color: green !important;">W</div>
+                            {% elif result.dcb_score == result.opp_score %}
+                                <div class="winner-indicator" style="background-color: grey !important;">D</div>
+                            {% else %}
+                                <div class="winner-indicator">L</div>
+                            {% endif %}
+
+                        <div class="team-name">vs {{ result.opposition }}</div>
+                        <div class="date-location">
+                            <div>{{ result.date }}</div>
+                            <div>{{ result.location }}</div>
+                        </div>
+                        <div class="score-container">
+                            <div class="score-team">
+                                <h4>DCB</h4>
+                                <span>{{ result.dcb_score }}</span>
+                            </div>
+                            <div class="vs-separator">-</div>
+                            <div class="score-team">
+                                <h4>{{ result.opposition }}</h4>
+                                <span>{{ result.opp_score }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button data-action="results">Show more games</button>
+            </div>
+            <div class="games upcoming">
+                <h1 class="head-text">Upcoming Games</h1>
+                    <div class="upcoming-container">
+                        {% for upcoming in upcomings %}
+                        <div class="result-card upcoming upcoming-count">
+                            <div class="sport-tag">{{ upcoming.dcb_team }}</div>
+                            <div class="team-name">vs {{ upcoming.opposition }}</div>
+                            <div class="date-location">
+                                <div>{{ upcoming.date }}</div>
+                                <div>{{ upcoming.time }}</div>
+                                <div>{{ upcoming.location }}</div>
+                            </div>
+                            <div>Upcoming game, come and support :D</div>
+                        </div>    
+                        {% endfor %} 
+                    </div>
+                    <button data-action="upcoming">Show more games</button>
+            </div>
+        </div>
+        <div class="players">
+            <h2 class="head-text" style="margin-right:10rem; margin-bottom:2.25rem;">The team</h2>
+
+            <!-- Coach -->
+            <div class="coaches">
+                <h2 class="coach" style="margin-right:10rem; margin-bottom:2.25rem;">Coaches</h2>
+                {% if team.get_coach %}
+                    {% for coach in team.get_coach %}
+                        <div class="player head-coach">
+                            {% if coach.photo %}
+                                <img src="{{ coach.photo.url }}" alt="{{ coach }}" class="profile-pic"/>
+                            {% else %}
+                                <img src="{{ coach.profile_pic_url }}" alt="{{ coach }}" class="profile-pic"/>
+                            {% endif %}
+                            <div class="player-name">
+                                {{ coach.name }}
+                                <span class="captain-label head-coach-label">Head coach</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if team.get_student_coach %}
+                    {% for coach in team.get_student_coach %}
+                        <div class="player student-coach">
+                            {% if coach.photo %}
+                                <img src="{{ coach.photo.url }}" alt="{{ coach }}" class="profile-pic"/>
+                            {% else %}
+                                <img src="{{ coach.profile_pic_url }}" alt="{{ coach }}" class="profile-pic"/>
+                            {% endif %}
+                            <div class="player-name">
+                                {{ coach.name }}
+                                <span class="captain-label student-coach-label">Student coach</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <hr style="margin-bottom:1rem;">
+            <!-- Captain -->
+            <h2 class="coach" style="margin-right:10rem; margin-bottom:2.25rem;">Players</h2>
+            {% if team.get_captain %}
+                <a href="{% url 'player' team_name=team.name pk=team.get_captain.pk %}">
+                    <div class="player captain">
+                        {% if team.get_captain.photo %}
+                            <img src="{{ team.get_captain.photo.url }}" alt="{{ team.get_captain }}" class="profile-pic"/>
+                        {% else %}
+                            <img src="{{ team.get_captain.profile_pic_url }}" alt="{{ team.get_captain }}" class="profile-pic"/>
+                        {% endif %}
+                        <div class="player-name">
+                            {{ team.get_captain }}
+                            <span class="captain-label">CAPTAIN</span>
+                        </div>
+                        <div class="player-number">{{ team.get_captain.shirt_number }}</div>
+                        <div class="player-position">{{ team.get_captain.position }}</div>
+                    </div>
+                </a>
+            {% endif %}
+            
+            <!-- Other Players -->
+            {% for player in players %}
+                <a href="{% url 'player' team_name=team.name pk=player.pk %}">
+                    <div class="player">
+                        {% if player.photo %}
+                            <img src="{{ player.photo.url }}" alt="{{ player }}" class="profile-pic"/>
+                        {% else %}
+                            <img src="{{ player.profile_pic_url }}" alt="{{ player }}" class="profile-pic"/>
+                        {% endif %}
+                        <div class="player-name">{{ player }}</div>
+                        <div class="player-number">{{ player.shirt_number }}</div>
+                        <div class="player-position">{{ player.position }}</div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function loadMoreGames(type){
+            if (type === 'results'){
+                const total = document.querySelectorAll('.result').length;
+                const result = document.querySelector('.results-container');
+                const headingElement = document.getElementById('head-text');
+                const teamName = headingElement.dataset.teamName;
+
+                fetch(`/api/more-games/${teamName}/${total}`).then(response => response.json()).then(data => {
+                    if (data.games.length === 0){
+                        console.log("No more games available")
+                    }
+                    else{
+                        data.games.forEach(game => {
+                            const gameDiv = document.createElement('div');
+                            let winner = '';
+                            console.log('hi')
+                            if (game.dcb_score > game.opp_score){
+                                winner = '<div class="winner-indicator" style="background-color: green !important;">W</div>';
+                            }
+                            else if (game.dcb_score == game.opp_score){
+                                winner = '<div class="winner-indicator" style="background-color: grey !important;">D</div>';
+                            }
+                            else{
+                                winner = '<div class="winner-indicator">L</div>';
+                            }
+                            gameDiv.classList.add('result-card');
+                            gameDiv.classList.add('result')
+                            gameDiv.classList.add('upcoming-count')
+                            gameDiv.innerHTML = `
+                                <div class="sport-tag">${game.dcb_team}</div>
+                                ${winner}
+                                <div class="team-name">vs ${game.opposition}</div>
+                                <div class="date-location">
+                                    <div>${game.date}</div>
+                                    <div>${game.location}</div>
+                                </div>
+                                <div class="score-container">
+                                    <div class="score-team">
+                                        <h4>DCB</h4>
+                                        <span>${game.dcb_score}</span>
+                                    </div>
+                                    <div class="vs-separator">-</div>
+                                    <div class="score-team">
+                                        <h4>${game.opposition}</h4>
+                                        <span>${game.opp_score}</span>
+                                    </div>
+                                </div>
+                            `;
+                            result.appendChild(gameDiv);
+                            })
+                        }
+            }).catch(error => {
+                    console.log(error);
+                    console.log("Error loading game")
+                })
+            }
+
+
+            else{
+                const total = document.querySelectorAll('.upcoming-count').length;
+                const upcomingContainer = document.querySelector('.upcoming-container');
+                const headingElement = document.getElementById('head-text');
+                const teamName = headingElement.dataset.teamName;
+                console.log(total)
+                fetch(`/api/more-upcomings/${teamName}/${total}`).then(response => response.json()).then(data =>{
+                    if (data.games.length === 0){
+                        console.log("No more games available")
+                    }
+                    else{
+                        data.games.forEach(upcoming => {
+                            const upcomingDiv = document.createElement('div');
+                            upcomingDiv.classList.add('result-card');
+                            upcomingDiv.classList.add('upcoming')
+                            upcomingDiv.classList.add('upcoming-count')
+                            upcomingDiv.innerHTML =    `
+                                    <div class="sport-tag">${upcoming.dcb_team}</div>
+                                        <div class="team-name">vs ${upcoming.opposition}</div>
+                                        <div class="date-location">
+                                            <div>${upcoming.date}</div>
+                                            <div>${upcoming.time}</div>
+                                            <div>${upcoming.location}</div>
+                                        </div>
+                                    <div>Upcoming game, come and support :D</div>
+                                    `;
+                            upcomingContainer.appendChild(upcomingDiv);    
+                    })
+                } 
+                }).catch(error => {
+                    console.log(error);
+                    console.log("Error loading game")
+                })
+            }
+        }
+        const resultButton = document.querySelector('button[data-action="results"]');
+        const upcomngButton = document.querySelector('button[data-action="upcoming"]');
+        resultButton.addEventListener('click', () => loadMoreGames('results'));
+        upcomngButton.addEventListener('click', () => loadMoreGames('upcoming'))
+    </script>
+{% endblock %}
+

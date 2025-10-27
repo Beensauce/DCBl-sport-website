@@ -1,0 +1,165 @@
+:root{
+    --red:#9C0000;
+    --navy-blue:#19273D;
+    --white-kind-of:#F9FAFB;
+}
+
+.games{
+    padding: 3% 2%;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.upcoming{
+    background-color: var(--white-kind-of);
+}
+.upcoming-container{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.results-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.result-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    min-width: 280px;
+    max-width: 360px;
+    border: 1px solid #eaeaea;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.result-card:hover{
+    transform: translateY(-3px);
+}
+
+.sport-tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #d15b5b;
+    color: var(--red);
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.head-text{
+    padding-top:30px;
+    text-align: center;
+    position:relative;
+}
+
+.head-text::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: var(--red);
+}
+
+.winner-indicator {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--red);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.team-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.date-location {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.score-team {
+    text-align: center;
+}
+
+.score-team h4 {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.score-team span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1a2d4e;
+}
+
+.vs-separator {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin: 0 10px;
+}
+
+.c-item{
+    height:90vh;
+}
+
+.c-img{
+    height:100%;
+    object-fit: cover;
+    filter:brightness(0.7);
+}
+
+.school-overlay {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    color: white;
+    font-size: 4rem;
+    font-weight: bold;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.694);
+    text-align: center;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .school-overlay{
+        top:30% !important;
+    }
+}

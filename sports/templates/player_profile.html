@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <title>{{ player }} - {{ player.team }}</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block content %}
+    
+    <!-- Profiles -->
+    <main class="profiles">
+        <!-- Captain -->
+        <article id="captain" class="profile-card anchor-offset" aria-labelledby="captain-name">
+            <div class="avatar-wrap">
+                {% if player.photo %}
+                    <img src="{{ player.photo.url }}" alt="{{ player }}" />
+                {% else %}
+                    <img src="{{ player.profile_pic_url }}" alt="{{ player }}" />
+                {% endif %}
+            </div>
+            <h3 id="captain-name" class="player-name">{{ player }}</h3>
+            {% if player.is_captain %}
+                <div class="captain-badge">Captain</div>
+            {% endif %}
+
+            <div class="player-number">{{ player.shirt_number }}</div>
+            <div class="player-details"><a class="team-link" href="{% url 'team' team_name=player.team.name %}">{{ player.team }}</a> - {{ player.position }}</div>
+            <div class="player-details">Year: {{ player.year }}</div>
+            <blockquote class="quote">“{{ player.quote }}”</blockquote>
+        </article>
+ 
+        <!-- Roster Grid -->
+        <section id="roster" class="Related players">
+            <h2 class="section-title">Related players</h2>
+            <div class="players-grid">
+            {% for mate in teamates %}
+                <a href="{% url 'player' team_name=player.team.name pk=mate.pk %}" class="player-card">
+                        <img src="{{ mate.profile_pic_url }}" alt="{{ mate }}" />
+                    <div class="name">{{ mate }}</div>
+                    <div class="position">{{ mate.position }}</div>
+                </a>
+
+            {% endfor %}
+            </div>
+        </section>
+    </main>
+    </body>     
+{% endblock %}

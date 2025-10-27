@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="{% static 'Pictures/Lions_logo.png' %}">
+    {% block head %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css'%}">
+</head>
+
+<body>
+    <nav class="self-navbar">
+        <a href="{% url 'index-page' %}" style="text-decoration: none;">
+            <div class="dcb-lions">
+                <img class="logo" src="{% static 'Pictures/Lions_logo.svg'%}" alt="Lions logo" >
+                <h1 class="name">DCB Lions</h1>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'index-page' %}">Home</a></li>
+            <li><a href="{% url 'team-list' %}">Teams</a></li>
+            <li><a href="{% url 'legends' %}">Legends</a></li>  
+        </ul>
+        <div onclick="menuClick()" class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <div class="mobile-container">
+        <ul class="mobile">
+            <li><a href="{% url 'index-page' %}">Home</a></li>
+            <li><a href="{% url 'team-list' %}">Teams</a></li>
+            <li><a href="{% url 'legends' %}">Legends</a></li>
+        </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+    
+    <footer>
+        <p>Beensauce, iq_is_2, Metop</p>
+    </footer>
+
+    <script>
+        const mobileList = document.querySelector('.mobile');
+        const mobileContainer = document.querySelector('.mobile-container'); 
+        function menuClick(){
+            if (mobileContainer.style.display === 'flex'){
+                mobileContainer.style.display = 'none';
+            }
+            else{
+                mobileContainer.style.display = 'flex'
+            }
+        }
+    </script>
+</body>
+</html>

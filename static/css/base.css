@@ -1,0 +1,144 @@
+:root{
+    --red:#9C0000;
+    --navy-blue:#19273D;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+}
+
+.self-navbar{
+    background-color: var(--navy-blue);
+    padding: 1rem !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dcb-lions {
+    display: flex;
+    align-items: center;
+}
+
+.dcb-lions .name{
+    margin-bottom: 0 !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+    font-size: 2rem !important;
+}
+
+.logo {
+    width: 45px !important;
+    height: 45px !important;
+    margin-right: 10px !important;
+}
+
+.name{
+    color:white;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin-bottom:0 !important;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+    position: relative;
+    padding: 2px;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: var(--red);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+footer{
+    width:100%;
+    height:auto;   
+    background-color: var(--navy-blue);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.mobile-container{
+    display: none;
+    position:absolute;
+    z-index: 100;
+    width:100%;
+}
+
+.mobile{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    text-align: center;
+}
+
+.mobile li{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.mobile a{
+    color:white;
+    font-size: 1.5rem;
+}
+
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
